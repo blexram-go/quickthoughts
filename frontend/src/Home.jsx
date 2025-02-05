@@ -1,7 +1,12 @@
+import UserHomePage from "./UserHomePage.jsx";
+import LoginForm from "./LoginForm.jsx";
+
 function Home() {
+    const isLoggedIn = true;
+
     return (
         <div className="home-content">
-            <h1>This is the home page!</h1>
+            {isLoggedIn ? <UserHomePage /> : <LoginForm />}
         </div>
     )
 }
