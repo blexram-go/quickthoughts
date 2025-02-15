@@ -1,10 +1,12 @@
-import Navbar from "./Navbar.jsx"
+import { Route, Routes } from "react-router";
 
 function App() {
   
   return (
     <>
-      <Navbar />
+      <Routes>
+
+      </Routes>
     </>
   )
 }
