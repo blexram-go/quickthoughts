@@ -7,6 +7,7 @@ import (
 
 func main() {
 	port := "8080"
+	// db_url := "postgres://brianramos:@localhost:5432/quickthoughts?sslmode=disable"
 
 	mux := http.NewServeMux()
 
