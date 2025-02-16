@@ -2,17 +2,17 @@ import { Link } from "react-router";
 
 function Navbar()  {
     return (
-        <nav className="navbar">
-            <div className="navbar-left">
-                <h1>QuickThoughts</h1>
+        <nav className="navbar navbar-default container-md">
+            <div className="navbar-brand">
+                <h4>QuickThoughts</h4>
             </div>
-            <div className="navbar-center">
-                <Link to="/">Home</Link>
-                <Link to="/thoughts">Thoughts</Link>
-                <Link to="/create">Create Thought</Link>
+            <div className="navbar-nav d-flex flex-row m-3">
+                <Link to="/" className="nav-link m-3">Home</Link>
+                <Link to="/thoughts" className="nav-link m-3">Thoughts</Link>
+                <Link to="/create" className="nav-link m-3">Create Thought</Link>
             </div>
-            <div className="navbar-right">
-                <button className="logout-button">Log Out</button>
+            <div className="navbar-nav navbar-right">
+                <button className="btn btn-outline-danger">Log Out</button>
             </div>
         </nav>
     )
