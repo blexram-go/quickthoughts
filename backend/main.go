@@ -31,7 +31,8 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.Handle("/", http.FileServer(http.Dir("./frontend/build")))
-	mux.HandleFunc("/create", cfg.handlerCreateEntry)
+	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)
+	mux.HandleFunc("GET /entries", cfg.handlerGetEntries)
 
 	server := http.Server{
 		Addr:    ":" + port,

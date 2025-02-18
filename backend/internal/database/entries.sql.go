@@ -50,3 +50,36 @@ func (q *Queries) CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry
 	)
 	return i, err
 }
+
+const getEntries = `-- name: GetEntries :many
+SELECT id, created_at, updated_at, title, body FROM entries
+`
+
+func (q *Queries) GetEntries(ctx context.Context) ([]Entry, error) {
+	rows, err := q.db.QueryContext(ctx, getEntries)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Entry
+	for rows.Next() {
+		var i Entry
+		if err := rows.Scan(
+			&i.ID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Title,
+			&i.Body,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}

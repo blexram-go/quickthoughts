@@ -1,4 +1,6 @@
 function ThoughtsList() {
+    
+
     const thoughts = [
         {title: "title1", body: "This is the body for title1"},
         {title: "title2", body: "This is the body for title2"},

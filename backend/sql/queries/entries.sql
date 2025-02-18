@@ -8,3 +8,6 @@ VALUES (
     $5
 )
 RETURNING *;
+
+-- name: GetEntries :many
+SELECT * FROM entries;
