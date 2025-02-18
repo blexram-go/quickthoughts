@@ -16,7 +16,10 @@ type apiConfig struct {
 }
 
 func main() {
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -44,6 +47,7 @@ func main() {
 	mux.Handle("/", http.FileServer(http.Dir("./frontend/build")))
 	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)
 	mux.HandleFunc("GET /entries", cfg.handlerGetEntries)
+	mux.HandleFunc("GET /entries/{entryID}", cfg.handlerGetEntryByID)
 
 	server := http.Server{
 		Addr:    ":" + port,

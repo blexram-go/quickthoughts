@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 func (cfg *apiConfig) handlerGetEntries(w http.ResponseWriter, r *http.Request) {
@@ -24,4 +26,27 @@ func (cfg *apiConfig) handlerGetEntries(w http.ResponseWriter, r *http.Request) 
 	}
 
 	respondWithJSON(w, http.StatusOK, entries)
+}
+
+func (cfg *apiConfig) handlerGetEntryByID(w http.ResponseWriter, r *http.Request) {
+	entryIDString := r.PathValue("entryID")
+	entryID, err := uuid.Parse(entryIDString)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid entry ID")
+		return
+	}
+
+	dbEntry, err := cfg.db.GetEntryByID(context.Background(), entryID)
+	if err != nil {
+		respondWithError(w, http.StatusNotFound, "Couldn't get entry")
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, Entry{
+		ID:         dbEntry.ID,
+		Created_At: dbEntry.CreatedAt,
+		Updated_At: dbEntry.CreatedAt,
+		Title:      dbEntry.Title,
+		Body:       dbEntry.Body,
+	})
 }

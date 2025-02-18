@@ -11,3 +11,7 @@ RETURNING *;
 
 -- name: GetEntries :many
 SELECT * FROM entries;
+
+-- name: GetEntryByID :one
+SELECT * FROM entries
+WHERE id = $1;
