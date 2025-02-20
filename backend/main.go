@@ -48,6 +48,7 @@ func main() {
 	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)
 	mux.HandleFunc("GET /entries", cfg.handlerGetEntries)
 	mux.HandleFunc("GET /entries/{entryID}", cfg.handlerGetEntryByID)
+	mux.HandleFunc("DELETE /entries/{entryID}", cfg.handlerDeleteEntry)
 
 	server := http.Server{
 		Addr:    ":" + port,

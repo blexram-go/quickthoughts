@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -44,7 +43,7 @@ func (cfg *apiConfig) handlerCreateEntry(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	entry, err := cfg.db.CreateEntry(context.Background(), database.CreateEntryParams{
+	entry, err := cfg.db.CreateEntry(r.Context(), database.CreateEntryParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
 		UpdatedAt: time.Now().UTC(),

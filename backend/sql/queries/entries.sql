@@ -15,3 +15,7 @@ SELECT * FROM entries;
 -- name: GetEntryByID :one
 SELECT * FROM entries
 WHERE id = $1;
+
+-- name: DeleteEntry :exec
+DELETE FROM entries
+WHERE id = $1;

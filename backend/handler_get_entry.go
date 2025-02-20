@@ -1,14 +1,13 @@
 package main
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/google/uuid"
 )
 
 func (cfg *apiConfig) handlerGetEntries(w http.ResponseWriter, r *http.Request) {
-	dbEntries, err := cfg.db.GetEntries(context.Background())
+	dbEntries, err := cfg.db.GetEntries(r.Context())
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't get entries")
 		return
@@ -36,7 +35,7 @@ func (cfg *apiConfig) handlerGetEntryByID(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	dbEntry, err := cfg.db.GetEntryByID(context.Background(), entryID)
+	dbEntry, err := cfg.db.GetEntryByID(r.Context(), entryID)
 	if err != nil {
 		respondWithError(w, http.StatusNotFound, "Couldn't get entry")
 		return
