@@ -5,11 +5,15 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
+	"strings"
 
 	"github.com/blexram-go/quickthoughts/backend/internal/database"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
+
+const FSPATH = "../frontend/dist/"
 
 type apiConfig struct {
 	db *database.Queries
@@ -44,7 +48,21 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/", http.FileServer(http.Dir("./frontend/build")))
+	fs := http.FileServer(http.Dir(FSPATH))
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			fullPath := FSPATH + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+			_, err := os.Stat(fullPath)
+			if err != nil {
+				if !os.IsNotExist(err) {
+					panic(err)
+				}
+				r.URL.Path = "/"
+			}
+		}
+		fs.ServeHTTP(w, r)
+	})
+
 	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)
 	mux.HandleFunc("GET /entries", cfg.handlerGetEntries)
 	mux.HandleFunc("GET /entries/{entryID}", cfg.handlerGetEntryByID)

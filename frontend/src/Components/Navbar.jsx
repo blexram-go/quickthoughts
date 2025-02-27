@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function Navbar()  {
     return (
@@ -8,7 +8,7 @@ function Navbar()  {
             </div>
             <div className="navbar-nav d-flex flex-row m-3">
                 <Link to="/" className="nav-link m-3">Home</Link>
-                <Link to="/thoughts" className="nav-link m-3">Thoughts</Link>
+                <Link to="/entries" className="nav-link m-3">Thoughts</Link>
                 <Link to="/create" className="nav-link m-3">Create Thought</Link>
             </div>
             <div className="navbar-nav navbar-right">

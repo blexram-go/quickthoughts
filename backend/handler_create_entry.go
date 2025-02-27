@@ -12,7 +12,7 @@ import (
 
 type Entry struct {
 	ID         uuid.UUID `json:"id"`
-	Created_At time.Time `json:"create_at"`
+	Created_At time.Time `json:"created_at"`
 	Updated_At time.Time `json:"updated_at"`
 	Title      string    `json:"title"`
 	Body       string    `json:"body"`
