@@ -44,7 +44,7 @@ func (cfg *apiConfig) handlerGetEntryByID(w http.ResponseWriter, r *http.Request
 	respondWithJSON(w, http.StatusOK, Entry{
 		ID:         dbEntry.ID,
 		Created_At: dbEntry.CreatedAt,
-		Updated_At: dbEntry.CreatedAt,
+		Updated_At: dbEntry.UpdatedAt,
 		Title:      dbEntry.Title,
 		Body:       dbEntry.Body,
 	})
