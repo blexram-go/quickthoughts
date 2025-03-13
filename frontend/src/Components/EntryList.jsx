@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 function EntryList() {
-    const [data, setData] = useState([]);
+
+    const [entries, setEntries] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -10,8 +11,9 @@ function EntryList() {
                 if (!response.ok) {
                     throw new Error(`HTTP Error! status: ${response.status}`)
                 }
-                    const data = await response.json();
-                    setData(data);
+                    const entries = await response.json();
+                    setEntries(entries);
+                    console.log(entries);
             } catch (error) {
                 console.log(error)
             }
@@ -20,23 +22,33 @@ function EntryList() {
         fetchData();
     }, []);
 
+    const handleDelete = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:8080/entries/${id}`, {
+                method: "DELETE",
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to delete entry with ID: ${id}`);
+            }
+
+            setEntries(entries.filter(entry => entry.id !== id));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="entry-list-container">
-            <ul>
-                {data.map(entry => {
+                {entries.map(entry => {
                     return (
-                        <>
-                            <div className="entry-container">
-                                <li key={entry.ID}>
-                                    <h2>{entry.title}</h2>
-                                    <br/>
-                                    <p>{entry.body}</p>
-                                </li>
-                            </div>
-                        </>
-                    )
+                        <div className="entry-container" key={entry.id}>
+                            <h2>{entry.title}</h2>
+                            <br/>
+                            <p>{entry.body}</p>
+                            <button className="entry-delete-button" onClick={() => handleDelete(entry.id)}>Delete</button>
+                        </div>
+                    );
                 })}
-            </ul>
         </div>
     )
 

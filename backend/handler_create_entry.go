@@ -66,7 +66,7 @@ func (cfg *apiConfig) handlerCreateEntry(w http.ResponseWriter, r *http.Request)
 }
 
 func validateTitleLength(title string) (string, error) {
-	const maxTitleLength = 140
+	const maxTitleLength = 40
 	if len(title) > maxTitleLength {
 		return "", errors.New("Entry title exceeds max length")
 	}

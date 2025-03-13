@@ -5,8 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path"
-	"strings"
+	"path/filepath"
 
 	"github.com/blexram-go/quickthoughts/backend/internal/database"
 	"github.com/joho/godotenv"
@@ -50,17 +49,13 @@ func main() {
 
 	fs := http.FileServer(http.Dir(FSPATH))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/" {
-			fullPath := FSPATH + strings.TrimPrefix(path.Clean(r.URL.Path), "/")
-			_, err := os.Stat(fullPath)
-			if err != nil {
-				if !os.IsNotExist(err) {
-					panic(err)
-				}
-				r.URL.Path = "/"
-			}
+		path := filepath.Join(FSPATH, r.URL.Path)
+		_, err := os.Stat(path)
+		if err == nil {
+			fs.ServeHTTP(w, r)
+			return
 		}
-		fs.ServeHTTP(w, r)
+		http.ServeFile(w, r, filepath.Join(FSPATH, "index.html"))
 	})
 
 	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)

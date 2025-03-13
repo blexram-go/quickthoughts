@@ -25,6 +25,8 @@ function CreateEntry() {
         } catch (error) {
             console.log(error)
         }
+        setTitle("");
+        setBody("");
     }
 
     return (
