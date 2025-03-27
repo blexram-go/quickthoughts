@@ -58,6 +58,8 @@ func main() {
 		http.ServeFile(w, r, filepath.Join(FSPATH, "index.html"))
 	})
 
+	mux.HandleFunc("POST /users", cfg.handlerCreateUser)
+
 	mux.HandleFunc("POST /entries", cfg.handlerCreateEntry)
 	mux.HandleFunc("GET /entries", cfg.handlerGetEntries)
 	mux.HandleFunc("GET /entries/{entryID}", cfg.handlerGetEntryByID)

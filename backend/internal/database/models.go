@@ -17,3 +17,10 @@ type Entry struct {
 	Title     string
 	Body      string
 }
+
+type User struct {
+	ID       uuid.UUID
+	Email    string
+	Password string
+	Username string
+}
