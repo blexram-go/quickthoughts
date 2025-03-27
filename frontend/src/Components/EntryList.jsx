@@ -46,7 +46,7 @@ function EntryList() {
             ) : (
                 entries.map(entry => (
                     <div className="entry-container" key={entry.id}>
-                        <h2>{entry.title}</h2>
+                        <h3>{entry.title}</h3>
                         <p>{entry.body}</p>
                         <button className="btn btn-danger" onClick={() => handleDelete(entry.id)}>
                             Delete
